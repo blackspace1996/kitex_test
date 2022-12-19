@@ -20,7 +20,9 @@ package netpoll
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/cloudwego/kitex/pkg/kerrors"
+	"log"
 	"net"
 	"sync"
 	"syscall"
@@ -152,7 +154,7 @@ func (ts *transServer) Shutdown() (err error) {
 		// 2. signal all active connections to close gracefully
 		if err := g.GracefulShutdown(ctx); err != nil {
 			if err == kerrors.ErrNotSupported {
-				panic(err)
+				log.Printf(fmt.Sprintf("[hwq]:%s", err))
 			}
 		}
 	}
